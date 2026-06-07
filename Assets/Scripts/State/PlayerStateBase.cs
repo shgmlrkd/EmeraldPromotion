@@ -6,6 +6,10 @@ public class PlayerStateBase : MonoBehaviour
     protected Transform refTransform;
     protected Animator refAnimator;
 
+    protected PlayerAnimationController playerAnimationController;
+
+    protected PlayerStateManager stateManager;
+
     protected virtual void OnEnable()
     {
         if (refTransform == null)
@@ -18,9 +22,19 @@ public class PlayerStateBase : MonoBehaviour
             refAnimator = GetComponent<Animator>();
         }
 
+        if (stateManager == null)
+        {
+            stateManager = GetComponent<PlayerStateManager>();
+        }
+
         if (characterController == null)
         {
             characterController = GetComponent<CharacterController>();
+        }
+
+        if(playerAnimationController == null)
+        {
+            playerAnimationController = GetComponentInChildren<PlayerAnimationController>();
         }
     }
 

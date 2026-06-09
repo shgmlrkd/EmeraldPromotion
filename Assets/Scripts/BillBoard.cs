@@ -4,6 +4,7 @@ public class BillBoard : MonoBehaviour
 {
     private void Update()
     {
-        transform.rotation = Quaternion.LookRotation(Camera.main.transform.position);
+        Vector3 pos = Camera.main.transform.position - transform.position;
+        transform.rotation = Quaternion.LookRotation(pos);
     }
 }

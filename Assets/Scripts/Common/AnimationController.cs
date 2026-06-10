@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PlayerAnimationController : MonoBehaviour
+public class AnimationController : MonoBehaviour
 {
     [SerializeField]
     private Animator refAnimator;
@@ -15,12 +15,12 @@ public class PlayerAnimationController : MonoBehaviour
         return refAnimator.GetCurrentAnimatorStateInfo(0);
     }
 
-    public void SetAnimatorState(PlayerStateManager.State newState)
+    public void SetAnimatorState(CharacterStateManager.State newState)
     {
         refAnimator.SetInteger(stateStringToHash, (int)newState);
     }
 
-    public void SetAnimatorAttackCombo(PlayerStateManager.Combat newState)
+    public void SetAnimatorAttackCombo(CharacterStateManager.Combat newState)
     {
         refAnimator.SetInteger(attackComboStringToHash, (int)newState);
     }

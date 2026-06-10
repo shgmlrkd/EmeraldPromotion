@@ -35,7 +35,7 @@ public class PlayerAttackState : PlayerStateBase
 
     private void ComboCheck()
     {
-        playerAnimationController.SetAnimatorAttackCombo(stateManager.NextAttackCombo);
+        animationController.SetAnimatorAttackCombo(stateManager.NextAttackCombo);
     }
 
     private void AttackEnd()

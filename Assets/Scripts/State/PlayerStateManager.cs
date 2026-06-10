@@ -1,54 +1,13 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 
-public class PlayerStateManager : MonoBehaviour
+public class PlayerStateManager : CharacterStateManager
 {
-    public enum State
-    {
-        None = -1,
-        Idle,
-        Walk,
-        Run,
-        Attack,
-        Hit,
-        Dead,
-        Length
-    }
-
-    public enum Combat
-    {
-        None = -1,
-        AttackCombo1,
-        AttackCombo2,
-        AttackCombo3,
-        Length
-    }
-
-    [SerializeField]
-    private State state = State.None;
-
-    public Combat NextAttackCombo { get; private set; } = Combat.None;
-
-    [SerializeField]
-    private UnityEvent<State> OnStateChanged;
-
-    [SerializeField]
-    private PlayerStateBase[] playerStates;
-
-    private PlayerAnimationController animationController;
-
     private PlayerHealth playerHp;
 
-    private void Awake()
+    protected override void Awake()
     {
-        playerHp = GetComponent<PlayerHealth>();
-        
-        animationController = GetComponentInChildren<PlayerAnimationController>();
-    }
-
-    private void OnEnable()
-    {
-        SetState(State.Idle);
+        base.Awake();
+        playerHp = GetComponent<PlayerHealth>();     
     }
 
     private void Update()
@@ -91,36 +50,5 @@ public class PlayerStateManager : MonoBehaviour
         {
             SetState(State.Idle);
         }
-    }
-
-    public void SetState(State newState)
-    {
-        if (state == newState) return;
-
-        if (state != State.None)
-        {
-            playerStates[(int)state].enabled = false;
-        }
-
-        state = newState;
-
-        playerStates[(int)state].enabled = true;
-
-        OnStateChanged?.Invoke(state);
-    }
-
-    public void SetIdleState()
-    {
-        SetState(State.Idle);
-    }
-
-    public void SetHitState()
-    {
-        SetState(State.Hit);
-    }
-
-    public void SetDeadState()
-    {
-        SetState(State.Dead);
     }
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PlayerWalkState : PlayerStateBase
+public class PlayerWalkState : CharacterStateBase
 {
     [SerializeField]
     private float rotationSpeed = 540.0f;

@@ -1,9 +1,5 @@
 ﻿using UnityEngine;
 
-public class PlayerHitState : PlayerStateBase
+public class PlayerHitState : CharacterStateBase
 {
-    protected override void Update()
-    {
-        
-    }
 }

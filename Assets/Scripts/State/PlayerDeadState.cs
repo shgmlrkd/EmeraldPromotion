@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class PlayerDeadState : PlayerStateBase
+public class PlayerDeadState : CharacterStateBase
 {
     [SerializeField]
     private PlayerRespawn respawn;

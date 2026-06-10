@@ -1,5 +1,5 @@
 ﻿
-public class PlayerIdleState : PlayerStateBase
+public class PlayerIdleState : CharacterStateBase
 {
    
 }

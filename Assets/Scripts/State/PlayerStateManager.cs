@@ -53,7 +53,7 @@ public class PlayerStateManager : MonoBehaviour
 
     private void Update()
     {
-        if (playerHp.IsDead) return;
+        if (playerHp.IsDead || playerHp.IsHit) return;
 
         if (InputManager.IsAttack)
         {
@@ -112,6 +112,11 @@ public class PlayerStateManager : MonoBehaviour
     public void SetIdleState()
     {
         SetState(State.Idle);
+    }
+
+    public void SetHitState()
+    {
+        SetState(State.Hit);
     }
 
     public void SetDeadState()

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - HealZone
   - DamageZone
+  - Enemy
   layers:
   - Default
   - TransparentFX

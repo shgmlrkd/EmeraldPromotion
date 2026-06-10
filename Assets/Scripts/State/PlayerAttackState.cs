@@ -21,6 +21,10 @@ public class PlayerAttackState : PlayerStateBase
 
         foreach (Collider hit in hits)
         {
+            if (hit.gameObject.CompareTag("Enemy"))
+            {
+                print("때림");
+            }
             if (hit.TryGetComponent(out IDamageable damageable))
             {
                 print("때림");

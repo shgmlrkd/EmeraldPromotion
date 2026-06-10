@@ -11,12 +11,16 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     [SerializeField]
     private UnityEvent OnRevive;
 
+    [SerializeField]
+    private UnityEvent OnHit;
+
     [SerializeField] 
     private UnityEvent OnDie;
 
     private float maxHp = 100;
     private float curHp;
 
+    public bool IsHit { get; private set; } = false;
     public bool IsDead { get; private set; } = false;
 
     private void Start()
@@ -54,6 +58,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         else
         {
             curHp -= damage;
+            IsHit = true;
+            OnHit?.Invoke();
         }
 
         UpdateHpUI(curHp);
@@ -71,4 +77,10 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {
         hpImage.fillAmount = curHp / maxHp;
     }
+
+    private void OnHitEnd()
+    {
+        IsHit = false;
+    }
+
 }

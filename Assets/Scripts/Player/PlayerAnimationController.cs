@@ -5,6 +5,8 @@ public class PlayerAnimationController : MonoBehaviour
     [SerializeField]
     private Animator refAnimator;
 
+    private int hitStringToHash = Animator.StringToHash("Hit");
+    private int deadStringToHash = Animator.StringToHash("Dead");
     private int stateStringToHash = Animator.StringToHash("State");
     private int attackComboStringToHash = Animator.StringToHash("AttackCombo");
 
@@ -21,5 +23,15 @@ public class PlayerAnimationController : MonoBehaviour
     public void SetAnimatorAttackCombo(PlayerStateManager.Combat newState)
     {
         refAnimator.SetInteger(attackComboStringToHash, (int)newState);
+    }
+
+    public void SetAnimatorHitTrigger()
+    {
+        refAnimator.SetTrigger(hitStringToHash);
+    }
+
+    public void SetAnimatorDeadTrigger()
+    {
+        refAnimator.SetTrigger(deadStringToHash);
     }
 }

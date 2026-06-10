@@ -8,7 +8,10 @@ public class PlayerStateManager : MonoBehaviour
         None = -1,
         Idle,
         Walk,
+        Run,
         Attack,
+        Hit,
+        Dead,
         Length
     }
 
@@ -34,12 +37,13 @@ public class PlayerStateManager : MonoBehaviour
 
     private PlayerAnimationController animationController;
 
+    private PlayerHealth playerHp;
+
     private void Awake()
     {
-        if (animationController == null)
-        {
-            animationController = GetComponentInChildren<PlayerAnimationController>();
-        }
+        playerHp = GetComponent<PlayerHealth>();
+        
+        animationController = GetComponentInChildren<PlayerAnimationController>();
     }
 
     private void OnEnable()
@@ -49,6 +53,8 @@ public class PlayerStateManager : MonoBehaviour
 
     private void Update()
     {
+        if (playerHp.IsDead) return;
+
         if (InputManager.IsAttack)
         {
             if (state != State.Attack)
@@ -79,7 +85,7 @@ public class PlayerStateManager : MonoBehaviour
 
         if (InputManager.Movement != Vector2.zero)
         {
-            SetState(State.Walk);
+            SetState(InputManager.IsRun ? State.Run : State.Walk);
         }
         else
         {
@@ -101,5 +107,15 @@ public class PlayerStateManager : MonoBehaviour
         playerStates[(int)state].enabled = true;
 
         OnStateChanged?.Invoke(state);
+    }
+
+    public void SetIdleState()
+    {
+        SetState(State.Idle);
+    }
+
+    public void SetDeadState()
+    {
+        SetState(State.Dead);
     }
 }

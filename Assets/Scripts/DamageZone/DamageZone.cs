@@ -12,6 +12,8 @@ public class DamageZone : MonoBehaviour
     {
         if (other.TryGetComponent(out PlayerHealth player))
         {
+            if (player.IsDead) return;
+
             timer += Time.deltaTime;
 
             if (timer > damageInterval)

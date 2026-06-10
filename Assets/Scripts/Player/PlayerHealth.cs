@@ -1,13 +1,23 @@
-﻿using UnityEngine;
+﻿using UnityEditor.Profiling.Memory.Experimental;
+using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : MonoBehaviour, IDamageable
 {
     [SerializeField]
     private Image hpImage;
 
+    [SerializeField]
+    private UnityEvent OnRevive;
+
+    [SerializeField] 
+    private UnityEvent OnDie;
+
     private float maxHp = 100;
     private float curHp;
+
+    public bool IsDead { get; private set; } = false;
 
     private void Start()
     {
@@ -22,8 +32,10 @@ public class PlayerHealth : MonoBehaviour
         {
             curHp = maxHp;
         }
-
-        curHp += amount;
+        else
+        {
+            curHp += amount;
+        }
 
         UpdateHpUI(curHp);
 
@@ -32,23 +44,31 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        curHp -= damage;
+        if(curHp - damage <= 0)
+        {
+            curHp = 0.0f;
+
+            IsDead = true;
+            OnDie?.Invoke();
+        }
+        else
+        {
+            curHp -= damage;
+        }
 
         UpdateHpUI(curHp);
+    }
 
-        if (curHp <= 0)
-        { 
-            Die();
-        }
+    public void ResetHealth()
+    {
+        OnRevive?.Invoke();
+        IsDead = false;
+        curHp = maxHp;
+        UpdateHpUI(curHp);
     }
 
     private void UpdateHpUI(float curHp)
     {
         hpImage.fillAmount = curHp / maxHp;
-    }
-
-    private void Die()
-    {
-        Debug.Log("Player Dead");
     }
 }

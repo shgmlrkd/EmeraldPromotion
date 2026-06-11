@@ -38,14 +38,22 @@ public class CharacterStateManager : MonoBehaviour
 
     protected AnimationController animationController;
 
+    protected CharacterStatus status;
+
     protected virtual void Awake()
     {
+        status = GetComponent<CharacterStatus>();
         animationController = GetComponentInChildren<AnimationController>();
     }
 
     private void OnEnable()
     {
         SetState(State.Idle);
+    }
+
+    protected virtual void Update()
+    {
+        if (status.IsDead || status.IsHit) return;
     }
 
     public void SetState(State newState)

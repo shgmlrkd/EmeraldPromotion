@@ -12,12 +12,12 @@ public class PlayerStateManager : CharacterStateManager
     protected override void Awake()
     {
         base.Awake();
-        playerStatus = GetComponent<PlayerStatus>();     
+        playerStatus = status as PlayerStatus;
     }
 
-    private void Update()
+    protected override void Update()
     {
-        if (playerStatus.IsDead || playerStatus.IsHit) return;
+        base.Update();
 
         if (InputManager.IsAttack && 
             playerStatus.CurStamina - data.staminaAttackConsumeAmount > 0.0f)

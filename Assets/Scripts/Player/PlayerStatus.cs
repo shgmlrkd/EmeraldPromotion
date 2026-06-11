@@ -1,22 +1,15 @@
-﻿using System.Collections;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class PlayerStatus : MonoBehaviour, IDamageable
+public class PlayerStatus : CharacterStatus, IDamageable
 {
-    [Header("플레이어 상태 이미지")]
-    [SerializeField]
-    private Image hpImage;
-
+    [Header("플레이어 스테미나 이미지")]
     [SerializeField]
     private Image staminaImage;
 
-    [Header("플레이어 상태 텍스트")]
-    [SerializeField]
-    private TextMeshProUGUI hpText;
-
+    [Header("플레이어 스테미나 텍스트")]
     [SerializeField]
     private TextMeshProUGUI staminaText;
 
@@ -32,10 +25,6 @@ public class PlayerStatus : MonoBehaviour, IDamageable
 
     private PlayerStateManager stateManager;
 
-    private float maxHp;
-
-    private float curHp;
-
     private float maxStamina;
 
     private float curStamina;
@@ -43,23 +32,21 @@ public class PlayerStatus : MonoBehaviour, IDamageable
 
     private float recoveryTimer;
 
-    public bool IsHit { get; private set; } = false;
-    public bool IsDead { get; private set; } = false;
-
     private void Awake()
     {
         stateManager = GetComponent<PlayerStateManager>();
     }
 
-    private void Start()
+    protected override void Start()
     {
         SetHp(stateManager.Data.maxHp);
+
+        base.Start();
+
         SetStamina(stateManager.Data.maxStamina);
 
-        curHp = maxHp;
         curStamina = maxStamina;
 
-        hpImage.fillAmount = 1.0f;
         staminaImage.fillAmount = 1.0f;
     }
 
@@ -89,13 +76,13 @@ public class PlayerStatus : MonoBehaviour, IDamageable
         {
             curHp = 0.0f;
 
-            IsDead = true;
+            isDead = true;
             OnDie?.Invoke();
         }
         else
         {
             curHp -= damage;
-            IsHit = true;
+            isHit = true;
             OnHit?.Invoke();
         }
 
@@ -105,25 +92,14 @@ public class PlayerStatus : MonoBehaviour, IDamageable
     public void ResetHealth()
     {
         OnRevive?.Invoke();
-        IsDead = false;
+        isDead = false;
         curHp = maxHp;
         UpdateHpUI(curHp);
-    }
-
-    public void SetHp(float hp)
-    {
-        maxHp = hp;
     }
 
     public void SetStamina(float stamina)
     {
         maxStamina = stamina;
-    }
-
-    private void UpdateHpUI(float curHp)
-    {
-        hpImage.fillAmount = curHp / maxHp;
-        hpText.text = $"{curHp} / {maxHp}";
     }
 
     public void UseStamina(float amount)
@@ -139,13 +115,10 @@ public class PlayerStatus : MonoBehaviour, IDamageable
         staminaText.text = $"{curStamina.ToString("F0")} / {maxStamina}";
     }
 
-    private void OnHitEnd()
-    {
-        IsHit = false;
-    }
-
     private void UpdateStamina()
     {
+        if (IsDead) return;
+
         if(InputManager.IsAttack)
         {
             recoveryTimer = 0.0f;

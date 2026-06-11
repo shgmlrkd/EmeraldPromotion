@@ -10,7 +10,7 @@ public class HealZone : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if(other.TryGetComponent(out PlayerHealth player))
+        if(other.TryGetComponent(out PlayerStatus player))
         {
             timer += Time.deltaTime;
 
@@ -24,7 +24,7 @@ public class HealZone : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent(out PlayerHealth player))
+        if (other.TryGetComponent(out PlayerStatus player))
         {
             timer = 0.0f;
         }

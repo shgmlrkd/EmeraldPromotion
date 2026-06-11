@@ -10,7 +10,7 @@ public class DamageZone : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.TryGetComponent(out PlayerHealth player))
+        if (other.TryGetComponent(out PlayerStatus player))
         {
             if (player.IsDead) return;
 
@@ -26,7 +26,7 @@ public class DamageZone : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent(out PlayerHealth player))
+        if (other.TryGetComponent(out PlayerStatus player))
         {
             timer = 0.0f;
         }

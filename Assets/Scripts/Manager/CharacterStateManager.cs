@@ -26,6 +26,7 @@ public class CharacterStateManager : MonoBehaviour
 
     [SerializeField]
     protected State state = State.None;
+    public State CurState => state;
 
     public Combat NextAttackCombo { get; protected set; } = Combat.None;
 

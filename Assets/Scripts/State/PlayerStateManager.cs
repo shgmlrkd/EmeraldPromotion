@@ -2,19 +2,25 @@
 
 public class PlayerStateManager : CharacterStateManager
 {
-    private PlayerHealth playerHp;
+    [SerializeField]
+    private PlayerData data;
+    public PlayerData Data => data;
+
+    private PlayerStatus playerStatus;
+    public PlayerStatus PlayerStatus => playerStatus;
 
     protected override void Awake()
     {
         base.Awake();
-        playerHp = GetComponent<PlayerHealth>();     
+        playerStatus = GetComponent<PlayerStatus>();     
     }
 
     private void Update()
     {
-        if (playerHp.IsDead || playerHp.IsHit) return;
+        if (playerStatus.IsDead || playerStatus.IsHit) return;
 
-        if (InputManager.IsAttack)
+        if (InputManager.IsAttack && 
+            playerStatus.CurStamina - data.staminaAttackConsumeAmount > 0.0f)
         {
             if (state != State.Attack)
             {
@@ -44,7 +50,11 @@ public class PlayerStateManager : CharacterStateManager
 
         if (InputManager.Movement != Vector2.zero)
         {
-            SetState(InputManager.IsRun ? State.Run : State.Walk);
+            State moveState = 
+                InputManager.IsRun && playerStatus.CurStamina > 0.0f ?
+                State.Run : State.Walk;
+
+            SetState(moveState);
         }
         else
         {

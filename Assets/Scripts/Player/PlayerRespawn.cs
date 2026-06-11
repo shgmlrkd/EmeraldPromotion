@@ -5,11 +5,11 @@ public class PlayerRespawn : MonoBehaviour
     [SerializeField]
     private Transform respawnPoint;
 
-    private PlayerHealth playerHealth;
+    private PlayerStatus playerHealth;
 
     private void Awake()
     {
-        playerHealth = GetComponentInParent<PlayerHealth>();
+        playerHealth = GetComponentInParent<PlayerStatus>();
     }
 
     public void Respawn(CharacterController characterController)

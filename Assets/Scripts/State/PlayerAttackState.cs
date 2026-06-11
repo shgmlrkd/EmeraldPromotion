@@ -8,14 +8,11 @@ public class PlayerAttackState : PlayerStateBase
     [SerializeField] 
     private LayerMask enemyLayer;
 
-    [SerializeField] 
-    private float attackRadius = 0.4f;
-
     private void OnAttackHit()
     {
         Collider[] hits = Physics.OverlapSphere(
             attackPoint.position,
-            attackRadius,
+            stateManager.Data.attackRange,
             enemyLayer
         );
 
@@ -28,9 +25,14 @@ public class PlayerAttackState : PlayerStateBase
             if (hit.TryGetComponent(out IDamageable damageable))
             {
                 print("때림");
-                damageable.TakeDamage(10);
+                damageable.TakeDamage(stateManager.Data.attackPower);
             }
         }
+    }
+
+    private void OnAttackStart()
+    {
+        stateManager.PlayerStatus.UseStamina(stateManager.Data.staminaAttackConsumeAmount);
     }
 
     private void ComboCheck()
@@ -45,8 +47,9 @@ public class PlayerAttackState : PlayerStateBase
 
     private void OnDrawGizmos()
     {
-        if (attackPoint == null) return;
+        if (attackPoint == null || stateManager == null) return;
+
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
+        Gizmos.DrawWireSphere(attackPoint.position, stateManager.Data.attackRange);
     }
 }

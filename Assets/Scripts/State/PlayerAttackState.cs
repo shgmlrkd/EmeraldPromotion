@@ -18,13 +18,8 @@ public class PlayerAttackState : PlayerStateBase
 
         foreach (Collider hit in hits)
         {
-            if (hit.gameObject.CompareTag("Enemy"))
-            {
-                print("때림");
-            }
             if (hit.TryGetComponent(out IDamageable damageable))
             {
-                print("때림");
                 damageable.TakeDamage(stateManager.Data.attackPower);
             }
         }
@@ -49,7 +44,7 @@ public class PlayerAttackState : PlayerStateBase
     {
         if (attackPoint == null || stateManager == null) return;
 
-        Gizmos.color = Color.yellow;
+        Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPoint.position, stateManager.Data.attackRange);
     }
 }

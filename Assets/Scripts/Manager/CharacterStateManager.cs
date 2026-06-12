@@ -51,11 +51,6 @@ public class CharacterStateManager : MonoBehaviour
         SetState(State.Idle);
     }
 
-    protected virtual void Update()
-    {
-        if (status.IsDead || status.IsHit) return;
-    }
-
     public void SetState(State newState)
     {
         if (state == newState) return;

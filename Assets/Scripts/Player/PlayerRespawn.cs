@@ -14,7 +14,7 @@ public class PlayerRespawn : MonoBehaviour
 
     public void Respawn(CharacterController characterController)
     {
-        playerHealth.ResetHealth();
+        playerHealth.ResetStatus();
 
         characterController.enabled = false;
 

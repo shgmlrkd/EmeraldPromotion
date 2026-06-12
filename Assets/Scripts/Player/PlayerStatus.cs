@@ -89,11 +89,15 @@ public class PlayerStatus : CharacterStatus, IDamageable
         UpdateHpUI(curHp);
     }
 
-    public void ResetHealth()
+    public void ResetStatus()
     {
         OnRevive?.Invoke();
+
         isDead = false;
+
         curHp = maxHp;
+        curStamina = maxStamina;
+
         UpdateHpUI(curHp);
     }
 

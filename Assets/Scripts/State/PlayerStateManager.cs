@@ -15,12 +15,12 @@ public class PlayerStateManager : CharacterStateManager
         playerStatus = status as PlayerStatus;
     }
 
-    protected override void Update()
+    private void Update()
     {
-        base.Update();
+        if (status.IsDead || status.IsHit) return;
 
         if (InputManager.IsAttack && 
-            playerStatus.CurStamina - data.staminaAttackConsumeAmount > 0.0f)
+            playerStatus.CurStamina - data.staminaAttackConsumeAmount >= 0.0f)
         {
             if (state != State.Attack)
             {

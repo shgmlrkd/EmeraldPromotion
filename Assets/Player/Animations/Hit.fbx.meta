@@ -62,15 +62,15 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.553719
-        functionName: SetIdleState
+      - time: 0.5503874
+        functionName: OnHitEnd
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.5785124
-        functionName: OnHitEnd
+      - time: 0.566219
+        functionName: SetIdleState
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

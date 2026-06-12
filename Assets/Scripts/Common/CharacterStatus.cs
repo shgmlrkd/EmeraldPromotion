@@ -15,6 +15,7 @@ public class CharacterStatus : MonoBehaviour
     protected float maxHp;
 
     protected float curHp;
+    public float CurHp => curHp;
 
     protected bool isHit;
 

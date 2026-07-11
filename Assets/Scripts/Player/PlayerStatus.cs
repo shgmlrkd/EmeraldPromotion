@@ -113,6 +113,20 @@ public class PlayerStatus : CharacterStatus, IDamageable
         UpdateStaminaUI(curStamina);
     }
 
+    public void StaminaHeal(float amount)
+    {
+        if (curStamina + amount > maxStamina)
+        {
+            curStamina = maxStamina;
+        }
+        else
+        {
+            curStamina += amount;
+        }
+
+        UpdateStaminaUI(curStamina);
+    }
+
     private void UpdateStaminaUI(float curStamina)
     {
         staminaImage.fillAmount = curStamina / maxStamina;
@@ -123,10 +137,13 @@ public class PlayerStatus : CharacterStatus, IDamageable
     {
         if (IsDead) return;
 
-        if(InputManager.IsAttack)
+        if(!stateManager.InventoryUI.isInventoryOpen)
         {
-            recoveryTimer = 0.0f;
-            return;
+            if (InputManager.IsAttack)
+            {
+                recoveryTimer = 0.0f;
+                return;
+            }
         }
 
         if (stateManager.CurState == PlayerStateManager.State.Run 

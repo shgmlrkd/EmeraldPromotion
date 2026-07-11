@@ -1,13 +1,19 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerStateManager : CharacterStateManager
 {
+    [SerializeField]
+    private InventoryUI inventoryUI;
+
     [SerializeField]
     private PlayerData data;
     public PlayerData Data => data;
 
     private PlayerStatus playerStatus;
+
     public PlayerStatus PlayerStatus => playerStatus;
+    public InventoryUI  InventoryUI => inventoryUI;
 
     protected override void Awake()
     {
@@ -18,6 +24,12 @@ public class PlayerStateManager : CharacterStateManager
     private void Update()
     {
         if (status.IsDead || status.IsHit) return;
+
+        if (inventoryUI.isInventoryOpen)
+        {
+            SetState(State.Idle);
+            return;
+        }
 
         if (InputManager.IsAttack && 
             playerStatus.CurStamina - data.staminaAttackConsumeAmount >= 0.0f)
